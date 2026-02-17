@@ -1,65 +1,164 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import { getColleges } from "@/services/college.service";
+import CollegeCard from "@/components/CollegeCard";
+import FilterBar from "@/components/FilterBar";
+import { useRouter } from "next/navigation";
+import HeroSection from "@/components/HeroSection";
+import { Button } from "@/components/ui/button";
+import SkeletonCard from "@/components/SkeletonCard";
+import FeaturesSection from "@/components/FeaturesSection";
+import StatsSection from "@/components/StatsSection";
+
 
 export default function Home() {
+  const [colleges, setColleges] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [compareList, setCompareList] = useState([]);
+  const [filters, setFilters] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const limit = 5;
+  const totalPages = Math.ceil(total / limit);
+
+  const router = useRouter();
+
+  const fetchColleges = async (newFilters = filters) => {
+    try {
+      setFilters(newFilters); // save filters for next page
+      setLoading(true);
+      const data = await getColleges({
+        ...newFilters,
+        page,
+        limit,
+      });
+
+      setColleges(data.data);
+      setTotal(data.total);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addToCompare = (college) => {
+    if (compareList.find((c) => c._id === college._id)) return;
+
+    if (compareList.length >= 3) {
+      alert("Maximum 3 colleges allowed");
+      return;
+    }
+
+    setCompareList([...compareList, college]);
+  };
+
+  const removeFromCompare = (id) => {
+    setCompareList(compareList.filter((c) => c._id !== id));
+  };
+
+  useEffect(() => {
+    fetchColleges(filters);
+  }, [page]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div>
+      <HeroSection />
+      <StatsSection />
+      <FeaturesSection />
+      <div id="colleges-section" className="max-w-7xl mx-auto px-4 py-10">
+        <h1 className="text-2xl font-semibold mb-6">Explore Colleges</h1>
+
+        <FilterBar
+          onFilter={(newFilters) => {
+            setPage(1);
+            fetchColleges(newFilters);
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {loading ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        ) : colleges.length === 0 ? (
+          <div className="text-center py-10 text-gray-500">
+            <p className="text-lg font-medium">No colleges found</p>
+            <p className="text-sm">Try adjusting filters or search</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {colleges.map((college) => (
+              <CollegeCard
+                key={college._id}
+                college={college}
+                onSelect={addToCompare}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        <div className="flex justify-center items-center gap-4 mt-10">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+            className="px-4 py-2 border rounded-md text-sm hover:bg-gray-100 disabled:opacity-40"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Previous
+          </button>
+
+          <span className="text-sm text-gray-600">
+            Page {page} of {totalPages || 1}
+          </span>
+
+          <button
+            disabled={page === totalPages || totalPages === 0}
+            onClick={() => setPage((prev) => prev + 1)}
+            className="px-4 py-2 border rounded-md text-sm hover:bg-gray-100 disabled:opacity-40"
           >
-            Documentation
-          </a>
+            Next
+          </button>
         </div>
-      </main>
+      </div>
+        
+      {/* Sticky Compare Tray */}
+      {compareList.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 flex justify-between items-center z-50">
+          <div className="flex gap-3 flex-wrap">
+            {compareList.map((college) => (
+              <div
+                key={college._id}
+                className="px-3 py-1 bg-gray-100 rounded-md text-sm flex items-center gap-2"
+              >
+                {college.name}
+                <button
+                  onClick={() => removeFromCompare(college._id)}
+                  className="text-red-500 font-bold"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {compareList.length >= 2 && (
+            <Button
+              onClick={() =>
+                router.push(
+                  `/compare?ids=${compareList.map((c) => c._id).join(",")}`,
+                )
+              }
+            >
+              Compare
+            </Button>
+          )}
+        </div>
+        
+      )}
     </div>
   );
 }

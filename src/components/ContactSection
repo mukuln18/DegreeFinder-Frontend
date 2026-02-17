@@ -1,0 +1,49 @@
+"use client";
+
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+export default function ContactSection() {
+  return (
+    <section className="w-full bg-gray-50 py-20">
+      <div className="max-w-3xl mx-auto px-6 text-center">
+
+        <h2 className="text-3xl font-bold mb-4">
+          Contact Us
+        </h2>
+
+        <p className="text-gray-600 mb-10">
+          Have questions or suggestions? We'd love to hear from you.
+        </p>
+
+        <Card>
+          <CardContent className="p-6">
+            <form
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              className="space-y-4 text-left"
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="53dc096e-7cae-4a1d-95df-ebce3891dcac"
+              />
+
+              <Input name="name" placeholder="Your Name" required />
+              <Input name="email" placeholder="Email Address" required />
+              <Textarea name="message" placeholder="Your Message" required />
+
+              <Button type="submit" className="w-full">
+                Send Message
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+      </div>
+    </section>
+  
+  );
+}
