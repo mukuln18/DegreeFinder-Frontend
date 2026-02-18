@@ -1,4 +1,4 @@
-<img width="1919" height="857" alt="image" src="https://github.com/user-attachments/assets/dd92ec30-c1d3-46b5-b836-0dce71834441" /># DegreeFinder Frontend (College Platform)
+# DegreeFinder Frontend (College Platform)
 
 A modern college discovery and comparison platform.
 
