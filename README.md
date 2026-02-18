@@ -90,11 +90,6 @@ https://degree-finder-frontend.vercel.app/
 
 ## Author
 
-Mukul
 GitHub: https://github.com/mukuln18
-
-
-
-
 
 
