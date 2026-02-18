@@ -28,7 +28,7 @@ export default function ContactSection() {
               <input
                 type="hidden"
                 name="access_key"
-                value="53dc096e-7cae-4a1d-95df-ebce3891dcac"
+                value=""
               />
 
               <Input name="name" placeholder="Your Name" required />
