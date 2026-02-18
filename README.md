@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img width="1919" height="857" alt="image" src="https://github.com/user-attachments/assets/dd92ec30-c1d3-46b5-b836-0dce71834441" /># DegreeFinder Frontend (College Platform)
 
-## Getting Started
+A modern college discovery and comparison platform.
 
-First, run the development server:
+Users can browse colleges, filter results, compare institutions, and view detailed information.
 
-```bash
+---
+
+## Features
+
+### Public
+
+* Hero section
+* College listing
+* Search & filters
+* Pagination
+* Loading & empty states
+* Comparison tray
+* College detail page
+* Contact form
+
+### Admin
+
+* Login
+* Create college
+* Edit college
+* Delete college
+* Upload images
+* Preview before publish
+
+---
+
+## Tech Stack
+
+* Next.js 14
+* Tailwind CSS
+* ShadCN UI
+* Axios
+
+---
+
+## Folder Structure
+
+src/
+├── app
+├── components
+├── services
+├── lib
+
+---
+
+## Environment Variables
+
+Create `.env.local`:
+
+NEXT_PUBLIC_API_BASE_URL=https://your-backend-url.com
+
+---
+
+## Installation & Running
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Runs at:
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+Frontend deployed at:
+https://degree-finder-frontend.vercel.app/
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Screenshots
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<img width="1919" height="857" alt="image" src="https://github.com/user-attachments/assets/27022963-7561-4ca3-bd00-6f79d0b704a8" />
+<img width="1888" height="849" alt="image" src="https://github.com/user-attachments/assets/2dbeb29f-1422-4ffc-8372-0702bb81dba0" />
+<img width="1894" height="745" alt="image" src="https://github.com/user-attachments/assets/57a101e0-ae6e-40e0-95a7-2ff9ee8fbb2d" />
+<img width="1269" height="859" alt="image" src="https://github.com/user-attachments/assets/0212d4bd-1529-4340-9c98-aab592de01db" />
+<img width="911" height="705" alt="image" src="https://github.com/user-attachments/assets/71041c21-e1b0-47b1-9239-7ca232cd59ba" />
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Author
+Mukul
+https://github.com/mukuln18
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+
+
